@@ -15,8 +15,8 @@ from pre_emphasis import PreEmphasis
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="ECAPA_trainer")
-    parser.add_argument('--eval_list',  type=str,   default="/data/yeonahong/vox/test_list.txt",              help='The path of the evaluation list, veri_test2.txt comes from https://www.robots.ox.ac.uk/~vgg/data/voxceleb/meta/veri_test2.txt')
-    parser.add_argument('--eval_path',  type=str,   default="/data/yeonahong/vox/voxceleb1",                    help='The path of the evaluation data, eg:"/data08/VoxCeleb1/test/wav" in my case')
+    parser.add_argument('--eval_list',  type=str,   default="/data/yeonahong/vox/test/veri_test.txt",              help='The path of the evaluation list, veri_test2.txt comes from https://www.robots.ox.ac.uk/~vgg/data/voxceleb/meta/veri_test2.txt')
+    parser.add_argument('--eval_path',  type=str,   default="/data/yeonahong/vox/test/wav",                    help='The path of the evaluation data, eg:"/data08/VoxCeleb1/test/wav" in my case')
     parser.add_argument('--save_path',  type=str,   default="exps",                                     help='Path to save the score.txt and models')
     parser.add_argument('--initial_model',  type=str,   default="",                                          help='Path of the initial_model')
 
