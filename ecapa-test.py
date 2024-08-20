@@ -100,10 +100,19 @@ def compute_amax(model, **kwargs):
 
 def load_model(args, device):
     model = ECAPA_TDNN(C=args.C).to(device)
+    self_state = model.state_dict()
     loaded_state = torch.load(args.initial_model)
-    model.load_state_dict(loaded_state, strict=False)
-    print(model)
-    print(f"Model {args.initial_model} loaded from previous state!")
+    for name, param in loaded_state.items():
+        origname = name
+        if name not in self_state:
+            name = name.replace("speaker_encoder.", "")
+            if name not in self_state:
+                print("%s is not in the model."%origname)
+                continue
+        if self_state[name].size() != loaded_state[origname].size():
+            print("Wrong parameter length: %s, model: %s, loaded: %s"%(origname, self_state[name].size(), loaded_state[origname].size()))
+            continue
+        self_state[name].copy_(param)
     return model
 
 def extract_embeddings(model, args, torchfbank, device):
@@ -168,9 +177,9 @@ def main():
     model = load_model(args, device)
     
     model.eval()
-    with torch.no_grad():
-        collect_stats(model, args.eval_list, args.eval_path, device, torchfbank)
-        compute_amax(model, method="percentile", percentile=100)
+    # with torch.no_grad():
+    #     collect_stats(model, args.eval_list, args.eval_path, device, torchfbank)
+    #     compute_amax(model, method="percentile", percentile=100)
     
     embeddings = extract_embeddings(model, args, torchfbank, device)
     scores, labels = compute_scores(embeddings, args.eval_list)
