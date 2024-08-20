@@ -177,9 +177,9 @@ def main():
     model = load_model(args, device)
     
     model.eval()
-    # with torch.no_grad():
-    #     collect_stats(model, args.eval_list, args.eval_path, device, torchfbank)
-    #     compute_amax(model, method="percentile", percentile=100)
+    with torch.no_grad():
+        collect_stats(model, args.eval_list, args.eval_path, device, torchfbank)
+        compute_amax(model, method="percentile", percentile=100)
     
     embeddings = extract_embeddings(model, args, torchfbank, device)
     scores, labels = compute_scores(embeddings, args.eval_list)
@@ -190,7 +190,7 @@ def main():
     
     print(f"EER {EER:.4f}%, minDCF {minDCF:.4f}%")
     
-    # torch.save(model.state_dict(), './models/quantized_model_direct_8_1.pth')
+    torch.save(model.state_dict(), './models/quantized_model.pth')
 
 if __name__ == "__main__":
     main()
