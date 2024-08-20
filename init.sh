@@ -1,7 +1,6 @@
 cd ../
 mv ECAPA-TDNN TensorRT/tools/pytorch-quantization/tests
 cd TensorRT/tools/pytorch-quantization/
-mkdir models
 
 pip install -r requirements.txt
 pip install torch==2.2.1 --index-url https://download.pytorch.org/whl/cu121

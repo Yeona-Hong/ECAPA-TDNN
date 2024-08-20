@@ -10,7 +10,7 @@ from tensorboardX import SummaryWriter
 from pytorch_quantization import nn as quant_nn
 from pytorch_quantization import calib
 from tools import init_args, tuneThresholdfromScore, ComputeErrorRates, ComputeMinDcf
-from model_quant_full import ECAPA_TDNN
+from model_quant_partial import ECAPA_TDNN
 from pre_emphasis import PreEmphasis
 
 def parse_arguments():
@@ -190,7 +190,7 @@ def main():
     
     print(f"EER {EER:.4f}%, minDCF {minDCF:.4f}%")
     
-    torch.save(model.state_dict(), './models/quantized_model.pth')
+    # torch.save(model.state_dict(), './models/quantized_model_direct_8_1.pth')
 
 if __name__ == "__main__":
     main()
